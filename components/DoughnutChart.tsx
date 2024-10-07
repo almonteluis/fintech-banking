@@ -24,13 +24,15 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({ accounts }) => {
 
   const options = {
     responsive: true,
+    cutout: "60%",
     plugins: {
       legend: {
-        position: 'top' as const,
+        display: false,
+        position: "top" as const,
       },
       title: {
         display: true,
-        text: 'Bank Accounts Distribution',
+        text: "Bank Accounts Distribution",
       },
     },
   };
