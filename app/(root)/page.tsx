@@ -23,6 +23,7 @@ const Home = () => {
           totalBanks={1}
           totalCurrentBalance={5650.34}
         />
+        RECENT TRANSACTIONS
       </div>
       <RightSidebar
         user={loggedIn}
