@@ -1,14 +1,19 @@
 "use server";
 
-import { SignUpParams } from "@/types";
+import { signInProps, SignUpParams } from "@/types";
 import { createAdminClient, createSessionClient } from "../appWrite";
 import { ID } from "node-appwrite";
 import { cookies } from "next/headers";
 import { parseStringify } from "../utils";
 
-export const SignIn = async () => {
+export const SignIn = async ({ email, password }: signInProps) => {
   try {
     //Mutation /database /
+    const { account } = await createAdminClient();
+
+    const response = await account.createEmailPasswordSession(email, password);
+
+    return parseStringify(response);
   } catch (error) {
     console.error("Error", error);
   }
@@ -41,8 +46,6 @@ export const SignUp = async (userData: SignUpParams) => {
   }
 };
 
-// ... your initilization functions
-
 export async function getLoggedInUser() {
   try {
     const { account } = await createSessionClient();
@@ -50,30 +53,5 @@ export async function getLoggedInUser() {
     return parseStringify(user);
   } catch (error) {
     return null;
-  }
-}
-
-export async function getStates() {
-  const headers = new Headers();
-  headers.append("X-CSCAPI-KEY", process.env.CSCAPI_KEY || "");
-
-  const requestOptions = {
-    method: "GET",
-    headers: headers,
-  };
-
-  try {
-    const response = await fetch(
-      "https://api.countrystatecity.in/v1/states",
-      requestOptions
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error("Error fetching states:", error);
-    return [];
   }
 }
