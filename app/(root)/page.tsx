@@ -13,9 +13,7 @@ const Home = async () => {
   // };
 
   const loggedIn = await getLoggedInUser();
-
-  const user = await getLoggedInUser();
-  if (!user) redirect("/sign-in");
+  if (!loggedIn) redirect("/sign-in");
 
   return (
     <section className="home">
