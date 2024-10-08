@@ -6,11 +6,13 @@ import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
 
 const Home = async () => {
-  const loggedIn = {
-    firstName: "Jorge",
-    lastName: "Almonte",
-    email: "almonteluis92@gmail.com",
-  };
+  // const loggedIn = {
+  //   firstName: "Jorge",
+  //   lastName: "Almonte",
+  //   email: "almonteluis92@gmail.com",
+  // };
+
+  const loggedIn = await getLoggedInUser();
 
   const user = await getLoggedInUser();
   if (!user) redirect("/sign-in");
@@ -21,7 +23,7 @@ const Home = async () => {
         <HeaderBox
           type="greeting"
           title="Welcome,"
-          user={loggedIn?.firstName || "Guest"}
+          user={loggedIn?.name || "Guest"}
           subtext="Access and manage your account and transactions efficiently"
         />
         <TotalBalanceBox
