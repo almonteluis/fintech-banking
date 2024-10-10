@@ -10,9 +10,9 @@ import { Form } from "@/components/ui/form";
 import CustomInput from "./CustomInput";
 import { authFormSchema } from "@/lib/utils";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
-import { Loader, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { SignIn, SignUp } from "@/lib/actions/user.actions";
+import { signIn, signUp } from "@/lib/actions/user.actions";
 import PlaidLink from "./PlaidLink";
 
 const AuthForm = ({ type }: { type: string }) => {
@@ -48,12 +48,12 @@ const AuthForm = ({ type }: { type: string }) => {
       };
       // sign up with appwrite & create plaid token
       if (type === "sign-up") {
-        const newUser = await SignUp(userData);
+        const newUser = await signUp(userData);
         setUser(newUser);
       }
 
       if (type === "sign-in") {
-        const response = await SignIn({
+        const response = await signIn({
           email: data.email,
           password: data.password,
         });
