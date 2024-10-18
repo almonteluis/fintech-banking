@@ -10,18 +10,18 @@ const RecentTransactions = ({
   accounts,
   transactions = [],
   appwriteItemId,
-  page = 1,
-}: RecentTransactionsProps) => {
-  const trans = transactions;
-  console.log(trans);
+}: // page = 1,
+RecentTransactionsProps) => {
   return (
     <section className="recent-transactions">
       <header className="flex item-center justify-center">
         <h2 className="recent-transaction-label">Recent Transactions</h2>
         <Link
           href={`/transaction-history/?id=${appwriteItemId}`}
-          className="view-all-button"
-        ></Link>
+          className="view-all-btn"
+        >
+          View All
+        </Link>
       </header>
       <Tabs defaultValue={appwriteItemId} className="w-full">
         <TabsList className="recent-transaction-tablist">

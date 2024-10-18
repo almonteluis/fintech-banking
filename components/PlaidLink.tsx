@@ -11,12 +11,13 @@ import {
   createLinkToken,
   exchangePublicToken,
 } from "@/lib/actions/user.actions";
+import Image from "next/image";
 
 const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
   const router = useRouter();
   const [token, setToken] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getLinkToken = async () => {
@@ -29,17 +30,15 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
   const onSuccess = useCallback<PlaidLinkOnSuccess>(
     async (public_token: string) => {
       try {
-        setIsLoading(true);
+        // setIsLoading(true);
         await exchangePublicToken({
           publicToken: public_token,
           user,
         });
         router.push("/");
       } catch (err) {
-        setError("Failed to connect bank account");
+        // setError("Failed to connect bank account");
         console.error("Error exchanging public token:", err);
-      } finally {
-        setIsLoading(false);
       }
     },
     [user, router]
@@ -61,9 +60,25 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
           Connect Bank
         </Button>
       ) : variant === "ghost" ? (
-        <Button className="plaidlink-ghost">Connect Bank</Button>
+        <Button
+          onClick={() => open()}
+          variant="ghost"
+          className="plaidlink-ghost"
+        >
+          <p className="hidden text-[16px] font-semibold text-black-2 xl:block">
+            Connect Bank
+          </p>
+        </Button>
       ) : (
-        <Button className="plaidlink-default">Connect Bank</Button>
+        <Button onClick={() => open()} className="plaidlink-default">
+          <Image
+            src="icons/connect-bank.svg"
+            alt="connect bank"
+            width={24}
+            height={24}
+          />
+          <p className="text-[16px] font-semibold text-black-2">Connect Bank</p>
+        </Button>
       )}
     </>
   );
