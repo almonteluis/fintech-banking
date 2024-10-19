@@ -22,7 +22,6 @@ const TransactionHistory = async ({
   const appwriteItemId = (id as string) || accountsData[0]?.appwriteItemId;
 
   const account = await getAccount({ appwriteItemId });
-  console.log(account);
 
   const rowsPerPage = 10;
   const totalPages = Math.ceil(account?.transactions.length / rowsPerPage);
@@ -39,7 +38,7 @@ const TransactionHistory = async ({
       <div className="transactions-header">
         <HeaderBox
           title="Transaction History"
-          subtext="See your bank details and transactions"
+          subtext="See your bank details and transactions."
         />
       </div>
 
@@ -47,7 +46,7 @@ const TransactionHistory = async ({
         <div className="transactions-account">
           <div className="flex flex-col gap-2">
             <h2 className="text-18 font-bold text-white">
-              {account?.data[0].name}
+              {account?.data.name}
             </h2>
             <p className="text-14 text-blue-25">{account?.data.officialName}</p>
             <p className="text-14 font-semibold tracking-[1.1px] text-white">
