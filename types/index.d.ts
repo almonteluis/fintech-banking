@@ -60,7 +60,7 @@ export type Account = {
   type: string;
   subtype: string;
   appwriteItemId: string;
-  sharableId: string;
+  shareableId: string;
 };
 
 export type Transaction = {
@@ -89,7 +89,7 @@ export type Bank = {
   accessToken: string;
   fundingSourceUrl: string;
   userId: string;
-  sharableId: string;
+  shareableId: string;
 };
 
 export type AccountTypes =

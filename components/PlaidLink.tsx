@@ -1,4 +1,3 @@
-import { PlaidLinkProps } from "@/types";
 import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import {
@@ -12,43 +11,42 @@ import {
   exchangePublicToken,
 } from "@/lib/actions/user.actions";
 import Image from "next/image";
+import { PlaidLinkProps } from "@/types";
 
 const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
   const router = useRouter();
+
   const [token, setToken] = useState("");
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getLinkToken = async () => {
       const data = await createLinkToken(user);
+
       setToken(data?.linkToken);
     };
 
     getLinkToken();
   }, [user]);
+
   const onSuccess = useCallback<PlaidLinkOnSuccess>(
     async (public_token: string) => {
-      try {
-        // setIsLoading(true);
-        await exchangePublicToken({
-          publicToken: public_token,
-          user,
-        });
-        router.push("/");
-      } catch (err) {
-        // setError("Failed to connect bank account");
-        console.error("Error exchanging public token:", err);
-      }
+      await exchangePublicToken({
+        publicToken: public_token,
+        user,
+      });
+
+      router.push("/");
     },
     [user, router]
   );
+
   const config: PlaidLinkOptions = {
     token,
     onSuccess,
   };
 
   const { open, ready } = usePlaidLink(config);
+
   return (
     <>
       {variant === "primary" ? (
@@ -57,7 +55,7 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
           disabled={!ready}
           className="plaidlink-primary"
         >
-          Connect Bank
+          Connect bank
         </Button>
       ) : variant === "ghost" ? (
         <Button
@@ -65,19 +63,25 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
           variant="ghost"
           className="plaidlink-ghost"
         >
-          <p className="hidden text-[16px] font-semibold text-black-2 xl:block">
-            Connect Bank
+          <Image
+            src="/icons/connect-bank.svg"
+            alt="connect bank"
+            width={24}
+            height={24}
+          />
+          <p className="hiddenl text-[16px] font-semibold text-black-2 xl:block">
+            Connect bank
           </p>
         </Button>
       ) : (
         <Button onClick={() => open()} className="plaidlink-default">
           <Image
-            src="icons/connect-bank.svg"
+            src="/icons/connect-bank.svg"
             alt="connect bank"
             width={24}
             height={24}
           />
-          <p className="text-[16px] font-semibold text-black-2">Connect Bank</p>
+          <p className="text-[16px] font-semibold text-black-2">Connect bank</p>
         </Button>
       )}
     </>

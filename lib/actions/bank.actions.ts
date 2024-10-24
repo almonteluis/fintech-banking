@@ -1,17 +1,21 @@
 "use server";
 
-import { CountryCode } from "plaid";
+import {
+  CountryCode,
+} from "plaid";
+
 import { plaidClient } from "../plaid";
 import { parseStringify } from "../utils";
+
 import { getTransactionsByBankId } from "./transaction.actions";
 import { getBanks, getBank } from "./user.actions";
 import {
-  getAccountsProps,
   Bank,
   getAccountProps,
-  Transaction,
+  getAccountsProps,
   getInstitutionProps,
   getTransactionsProps,
+  Transaction,
 } from "@/types";
 
 // Get multiple bank accounts
@@ -44,7 +48,7 @@ export const getAccounts = async ({ userId }: getAccountsProps) => {
           type: accountData.type as string,
           subtype: accountData.subtype! as string,
           appwriteItemId: bank.$id,
-          sharaebleId: bank.sharableId,
+          shareableId: bank.shareableId,
         };
 
         return account;
@@ -150,7 +154,7 @@ export const getTransactions = async ({
   accessToken,
 }: getTransactionsProps) => {
   let hasMore = true;
-  let transactions: any = [];
+  let transactions: unknown = [];
 
   try {
     // Iterate through each page of new transaction updates for item
